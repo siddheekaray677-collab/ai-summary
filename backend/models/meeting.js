@@ -37,7 +37,7 @@ const Meeting = sequelize.define('Meeting', {
     defaultValue: 'pending'
   },
   userId: {
-    type: DataTypes.UUID,
+    type: DataTypes.STRING,
     allowNull: false
   }
 });

@@ -20,7 +20,7 @@ const Report = sequelize.define('Report', {
     allowNull: true
   },
   userId: {
-    type: DataTypes.UUID,
+    type: DataTypes.STRING,
     allowNull: false
   }
 });

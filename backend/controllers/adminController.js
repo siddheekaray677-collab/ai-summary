@@ -20,13 +20,24 @@ const getAdminStats = async (req, res) => {
     // Database / Storage monitoring
     let storageSizeMb = 0.82; // Default mock footprint
     try {
-      const dbPath = dbConfig.options.storage;
-      if (fs.existsSync(dbPath)) {
-        const stats = fs.statSync(dbPath);
-        storageSizeMb = Number((stats.size / (1024 * 1024)).toFixed(2));
+      if (dbConfig.getDialect() === 'postgres') {
+        const result = await dbConfig.query(
+          "SELECT pg_database_size(current_database()) AS size_bytes",
+          { type: dbConfig.QueryTypes.SELECT }
+        );
+        if (result && result.length > 0 && result[0].size_bytes) {
+          const sizeBytes = parseInt(result[0].size_bytes, 10);
+          storageSizeMb = Number((sizeBytes / (1024 * 1024)).toFixed(2));
+        }
+      } else {
+        const dbPath = dbConfig.options.storage;
+        if (dbPath && fs.existsSync(dbPath)) {
+          const stats = fs.statSync(dbPath);
+          storageSizeMb = Number((stats.size / (1024 * 1024)).toFixed(2));
+        }
       }
     } catch (e) {
-      console.error('Error reading SQLite database file size:', e);
+      console.error('Error reading database file size:', e);
     }
 
     // Add additional mock storage for uploaded media assets

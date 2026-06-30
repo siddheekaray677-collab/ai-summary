@@ -50,7 +50,8 @@ const startServer = async () => {
   try {
     // Sync DB (alter: true maps modifications without dropping data in development)
     await sequelize.sync({ alter: false });
-    console.log('SQLite Database synchronized successfully.');
+    const dialectName = sequelize.getDialect() === 'postgres' ? 'PostgreSQL' : 'SQLite';
+    console.log(`${dialectName} Database synchronized successfully.`);
     
     app.listen(PORT, () => {
       console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);

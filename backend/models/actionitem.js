@@ -37,7 +37,7 @@ const ActionItem = sequelize.define('ActionItem', {
     }
   },
   userId: {
-    type: DataTypes.UUID,
+    type: DataTypes.STRING,
     allowNull: false
   }
 });

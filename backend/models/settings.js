@@ -8,7 +8,7 @@ const Settings = sequelize.define('Settings', {
     primaryKey: true
   },
   userId: {
-    type: DataTypes.UUID,
+    type: DataTypes.STRING,
     allowNull: false,
     unique: true
   },

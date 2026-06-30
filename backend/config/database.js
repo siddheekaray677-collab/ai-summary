@@ -2,18 +2,37 @@ const { Sequelize } = require('sequelize');
 const path = require('path');
 require('dotenv').config();
 
-const dbPath = process.env.DATABASE_PATH || './meetmind.sqlite';
-const absoluteDbPath = path.isAbsolute(dbPath) 
-  ? dbPath 
-  : path.join(__dirname, '..', dbPath);
+const databaseUrl = process.env.DATABASE_URL;
+let sequelize;
 
-const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: absoluteDbPath,
-  logging: false, // Set to console.log to see SQL queries in dev
-  define: {
-    timestamps: true
-  }
-});
+if (databaseUrl && databaseUrl.startsWith('postgres')) {
+  sequelize = new Sequelize(databaseUrl, {
+    dialect: 'postgres',
+    logging: false, // Set to console.log to see SQL queries in dev
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false // Required for Neon serverless PostgreSQL connection
+      }
+    },
+    define: {
+      timestamps: true
+    }
+  });
+} else {
+  const dbPath = process.env.DATABASE_PATH || './meetmind.sqlite';
+  const absoluteDbPath = path.isAbsolute(dbPath) 
+    ? dbPath 
+    : path.join(__dirname, '..', dbPath);
+
+  sequelize = new Sequelize({
+    dialect: 'sqlite',
+    storage: absoluteDbPath,
+    logging: false, // Set to console.log to see SQL queries in dev
+    define: {
+      timestamps: true
+    }
+  });
+}
 
 module.exports = sequelize;
