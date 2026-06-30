@@ -53,13 +53,22 @@ const startServer = async () => {
     const dialectName = sequelize.getDialect() === 'postgres' ? 'PostgreSQL' : 'SQLite';
     console.log(`${dialectName} Database synchronized successfully.`);
     
-    app.listen(PORT, () => {
-      console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
-    });
+    // Skip app.listen if running inside Vercel Serverless environment
+    if (!process.env.VERCEL) {
+      app.listen(PORT, () => {
+        console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
+      });
+    } else {
+      console.log('Running inside Vercel serverless environment. Skipping app.listen().');
+    }
   } catch (error) {
     console.error('Failed to start server:', error);
-    process.exit(1);
+    if (!process.env.VERCEL) {
+      process.exit(1);
+    }
   }
 };
 
 startServer();
+
+module.exports = app;
