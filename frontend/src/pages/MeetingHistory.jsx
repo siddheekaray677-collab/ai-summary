@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Search, Eye, Filter, RefreshCw, AlertCircle } from 'lucide-react';
+import { API_BASE_URL } from '../config';
 
 export default function MeetingHistory() {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ export default function MeetingHistory() {
   const fetchMeetings = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/meetings', {
+      const res = await fetch(`${API_BASE_URL}/api/meetings`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {

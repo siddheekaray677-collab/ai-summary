@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { UploadCloud, FileAudio, FileVideo, FileText, CheckCircle, Info, Sparkles, X } from 'lucide-react';
+import { API_BASE_URL } from '../config';
 
 export default function UploadMeeting() {
   const navigate = useNavigate();
@@ -118,7 +119,7 @@ export default function UploadMeeting() {
       formData.append('description', description);
       formData.append('category', category);
 
-      const res = await fetch('http://localhost:5000/api/meetings', {
+      const res = await fetch(`${API_BASE_URL}/api/meetings`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`

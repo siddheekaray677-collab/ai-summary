@@ -4,6 +4,7 @@ import {
   Users, HardDrive, ShieldAlert, Cpu, 
   Database, Activity, RefreshCw, BarChart2 
 } from 'lucide-react';
+import { API_BASE_URL } from '../config';
 
 export default function AdminDashboard() {
   const { token, user } = useAuth();
@@ -17,13 +18,13 @@ export default function AdminDashboard() {
 
   const fetchAdminData = async () => {
     try {
-      const statsRes = await fetch('http://localhost:5000/api/admin/stats', {
+      const statsRes = await fetch(`${API_BASE_URL}/api/admin/stats`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
-      const usersRes = await fetch('http://localhost:5000/api/admin/users', {
+      const usersRes = await fetch(`${API_BASE_URL}/api/admin/users`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
-      const meetingsRes = await fetch('http://localhost:5000/api/admin/meetings', {
+      const meetingsRes = await fetch(`${API_BASE_URL}/api/admin/meetings`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
 

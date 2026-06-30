@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
+import { API_BASE_URL } from '../config';
 
 const AuthContext = createContext(null);
 
@@ -20,7 +21,7 @@ const ClerkAuthWrapper = ({ children }) => {
   const [settings, setSettings] = useState(null);
   const [syncFailed, setSyncFailed] = useState(false);
 
-  const API_URL = 'http://localhost:5000/api/auth';
+  const API_URL = `${API_BASE_URL}/api/auth`;
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -153,7 +154,7 @@ const LocalAuthWrapper = ({ children }) => {
   const [theme, setTheme] = useState(localStorage.getItem('meetmind_theme') || 'dark');
   const [settings, setSettings] = useState(null);
 
-  const API_URL = 'http://localhost:5000/api/auth';
+  const API_URL = `${API_BASE_URL}/api/auth`;
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);

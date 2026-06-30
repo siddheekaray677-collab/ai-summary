@@ -5,6 +5,7 @@ import {
   FileAudio, Sparkles, AlertCircle, TrendingUp, CheckSquare, 
   Search, UploadCloud, ArrowRight, Play, Eye
 } from 'lucide-react';
+import { API_BASE_URL } from '../config';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -18,10 +19,10 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const meetingsRes = await fetch('http://localhost:5000/api/meetings', {
+        const meetingsRes = await fetch(`${API_BASE_URL}/api/meetings`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
-        const actionItemsRes = await fetch('http://localhost:5000/api/action-items', {
+        const actionItemsRes = await fetch(`${API_BASE_URL}/api/action-items`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { CheckSquare, User, Calendar, Edit3, ArrowRight, ArrowLeft, RefreshCw, CheckCircle2, ChevronRight, Play } from 'lucide-react';
+import { API_BASE_URL } from '../config';
 
 export default function ActionItems() {
   const { token } = useAuth();
@@ -18,7 +19,7 @@ export default function ActionItems() {
 
   const fetchActionItems = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/action-items', {
+      const res = await fetch(`${API_BASE_URL}/api/action-items`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -39,7 +40,7 @@ export default function ActionItems() {
 
   const handleStatusShift = async (item, targetStatus) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/action-items/${item.id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/action-items/${item.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -70,7 +71,7 @@ export default function ActionItems() {
     if (!editingItem) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/action-items/${editingItem.id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/action-items/${editingItem.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

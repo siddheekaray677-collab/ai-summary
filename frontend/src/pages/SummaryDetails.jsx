@@ -5,6 +5,7 @@ import {
   ArrowLeft, Download, Clipboard, Check, Trash2, 
   Sparkles, FileText, CheckCircle, AlertTriangle, Shield, User, Clock, Award
 } from 'lucide-react';
+import { API_BASE_URL } from '../config';
 
 export default function SummaryDetails() {
   const { id } = useParams();
@@ -23,7 +24,7 @@ export default function SummaryDetails() {
 
   const fetchDetails = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/meetings/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/meetings/${id}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -71,7 +72,7 @@ export default function SummaryDetails() {
       }
     }
 
-    const downloadUrl = `http://localhost:5000/api/reports/export/${id}/${format}`;
+    const downloadUrl = `${API_BASE_URL}/api/reports/export/${id}/${format}`;
     
     if (format === 'pdf') {
       // Open printable view in a new tab, passing the token via query param
@@ -112,7 +113,7 @@ export default function SummaryDetails() {
     }
 
     try {
-      const res = await fetch(`http://localhost:5000/api/meetings/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/meetings/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
