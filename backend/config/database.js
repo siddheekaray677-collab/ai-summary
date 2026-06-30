@@ -2,6 +2,14 @@ const { Sequelize } = require('sequelize');
 const path = require('path');
 require('dotenv').config();
 
+// Force Vercel bundler (NFT) to include PostgreSQL drivers in serverless environment
+try {
+  require('pg');
+  require('pg-hstore');
+} catch (e) {
+  // Ignore local load warnings if not using postgres in certain environments
+}
+
 const databaseUrl = process.env.DATABASE_URL;
 let sequelize;
 
